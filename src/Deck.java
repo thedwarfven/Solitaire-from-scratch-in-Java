@@ -4,11 +4,10 @@
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Collections.*;
 public class Deck {
     private ArrayList<Card> cards = new ArrayList<Card>();
     public Deck() {
-        for (int i = 0; i <= 13; i++) {
+        for (int i = 1; i <= 13; i++) {
             Card spades = new Card(i,'\u2660');
             Card clubs = new Card(i,'\u2663');
             Card diamonds = new Card(i,'\u2666');
@@ -25,7 +24,17 @@ public class Deck {
     }
 
     public Card dealCard() {
-        return cards.getFirst();
+        Card result = cards.getFirst();
+        cards.remove(result);
+        return result;
+    }
+
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (Card card : cards) {
+            result.append(card.toString()).append(" ");
+        }
+        return result.toString();
     }
 
 }
