@@ -44,6 +44,28 @@ public final class KlondikeGame {
         newGame();
     }
 
+    /**
+     * Creates a controlled state for engine tests in this package. Keeping this
+     * constructor package-private prevents production interfaces from bypassing
+     * the normal shuffled deal while allowing tests to describe rules clearly.
+     */
+    KlondikeGame(List<Card> stock, List<Card> waste, List<List<Card>> tableau,
+                  Map<Suit, List<Card>> foundations) {
+        this.random = new Random(0);
+        this.stock.addAll(stock);
+        this.waste.addAll(waste);
+        if (tableau.size() != TABLEAU_COUNT) {
+            throw new IllegalArgumentException("A test state must have seven tableau columns.");
+        }
+        for (List<Card> column : tableau) {
+            this.tableau.add(new ArrayList<>(column));
+        }
+        for (Suit suit : Suit.values()) {
+            this.foundations.put(suit,
+                    new ArrayList<>(foundations.getOrDefault(suit, List.of())));
+        }
+    }
+
     /** Clears all piles, shuffles a fresh deck, and deals the tableau. */
     public void newGame() {
         stock.clear();
